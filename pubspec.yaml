@@ -1,7 +1,7 @@
 name: lesscompile
-description: collection of Python-inspired functions to use in Dart
+description: Lessompile is a transformer of .less -> .css for Dart projects
 author: Mikhail Turilin <mikhail@turilin.com>
-homepage: https://github.com/mturilin/pythonic
+homepage: https://github.com/mturilin/lesscompile
 version: 0.0.1
 dependencies:
     barback: any
