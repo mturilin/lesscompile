@@ -2,7 +2,7 @@ name: lesscompile
 description: Lessompile is a transformer of .less -> .css for Dart projects
 author: Mikhail Turilin <mikhail@turilin.com>
 homepage: https://github.com/mturilin/lesscompile
-version: 0.0.1
+version: 0.0.2
 dependencies:
     barback: any
 dev_dependencies:
