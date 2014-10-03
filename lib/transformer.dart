@@ -9,7 +9,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:convert';
 import 'package:barback/barback.dart';
-
+import "package:ini/ini.dart";
 
 class LessTransformer extends Transformer {
     final BarbackSettings settings;
@@ -25,6 +25,9 @@ class LessTransformer extends Transformer {
 
     List<String> files;
 
+    String config_path;
+    String root_path;
+
     LessTransformer.asPlugin(this.settings) {
         var args = settings.configuration;
 
@@ -35,6 +38,15 @@ class LessTransformer extends Transformer {
         if (args['include_path'] != null) include_path = args['include_path'];
 
         files = args['files'];
+        config_path = args['config_path'];
+
+        if (config_path != null) {
+            new File(config_path).readAsLines()
+            .then(Config.fromStrings)
+            .then((Config config) {
+                root_path = config.get('general', 'rootpath');
+            });
+        }
     }
 
 
@@ -51,9 +63,11 @@ class LessTransformer extends Transformer {
         if (cleancss) flags.add('--clean-css');
         if (compress) flags.add('--compress');
         if (include_path != '') flags.add('--include-path=' + include_path);
+        if (root_path != '') flags.add('--rootpath=' + root_path);
+
         flags.add(inputFile);
 
-        print('\nless_node> command: $executable ${flags.join(' ')}');
+        print('\nlesscompile> command: $executable ${flags.join(' ')}');
 
         return Process.start(executable, flags, runInShell: true).then((Process process) {
             AssetId outputId = input.id.changeExtension('.css');
