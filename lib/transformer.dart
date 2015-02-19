@@ -42,7 +42,7 @@ class LessTransformer extends Transformer {
 
         if (config_path != null) {
             new File(config_path).readAsLines()
-            .then(Config.fromStrings)
+            .then((lines) => new Config.fromStrings(lines))
             .then((Config config) {
                 root_path = config.get('general', 'rootpath');
             });
